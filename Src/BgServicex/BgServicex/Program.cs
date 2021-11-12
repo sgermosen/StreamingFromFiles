@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -56,6 +57,22 @@ namespace BgServicex
                     services.Configure<AppSettings>(hostContext.Configuration.GetSection("AppSettings"));
                     services.AddScoped<IServiceA, ServiceA>();
                     services.AddScoped<IServiceB, ServiceB>();
+                    services.AddDbContext<ApplicationDataContext>(options =>
+                                            options.UseSqlServer(
+                                            hostContext.Configuration.GetSection("ConnectionStrings:DefaultConnection").Value));
+                    //       services.AddIdentity<IdentityUser, IdentityRole>(cfg =>
+                    //       {
+                    //           cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+                    //           cfg.SignIn.RequireConfirmedEmail = false;
+                    //           cfg.User.RequireUniqueEmail = true;
+                    //           cfg.Password.RequireDigit = false;
+                    //           cfg.Password.RequiredUniqueChars = 0;
+                    //           cfg.Password.RequireLowercase = false;
+                    //           cfg.Password.RequireNonAlphanumeric = false;
+                    //           cfg.Password.RequireUppercase = false;
+                    //           cfg.Password.RequiredLength = 6;
+                    //       }).AddDefaultTokenProviders()
+                    //.AddEntityFrameworkStores<ApplicationDataContext>();
                 })
                 .UseSerilog();
     }

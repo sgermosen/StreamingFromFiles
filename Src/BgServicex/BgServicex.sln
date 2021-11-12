@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31702.278
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BgServicex", "BgServicex\BgServicex.csproj", "{28F1E2C7-D8E3-4A22-B406-A020B3BC7B0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BgServicex", "BgServicex\BgServicex.csproj", "{28F1E2C7-D8E3-4A22-B406-A020B3BC7B0A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{095F3552-9E4F-44F0-A625-5400B36EB9B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

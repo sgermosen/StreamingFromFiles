@@ -1,3 +1,4 @@
+using BgServicex.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -15,11 +16,13 @@ namespace BgServicex
         private FileSystemWatcher _folderWatcher;
         private readonly string _inputFolder;
         private readonly IServiceProvider _services;
+        // private readonly ApplicationDataContext _context;
 
-        public Worker(ILogger<Worker> logger, IOptions<AppSettings> settings, IServiceProvider services)
+        public Worker(ILogger<Worker> logger, IOptions<AppSettings> settings, IServiceProvider services)//, ApplicationDataContext context)
         {
             _logger = logger;
             _services = services;
+            //_context = context;
             _inputFolder = settings.Value.InputFolder;
         }
 
@@ -40,8 +43,8 @@ namespace BgServicex
             _logger.LogInformation($"Binding Events from Input Folder: {_inputFolder}");
             _folderWatcher = new FileSystemWatcher(_inputFolder, "*.TXT")
             {
-                NotifyFilter = NotifyFilters.CreationTime | NotifyFilters.LastWrite | NotifyFilters.FileName |
-                                  NotifyFilters.DirectoryName
+                NotifyFilter = NotifyFilters.Attributes | NotifyFilters.CreationTime | NotifyFilters.LastWrite | NotifyFilters.FileName |
+                                  NotifyFilters.DirectoryName | NotifyFilters.Size
             };
             _folderWatcher.Created += Input_OnChanged;
             _folderWatcher.EnableRaisingEvents = true;
@@ -49,13 +52,29 @@ namespace BgServicex
             return base.StartAsync(cancellationToken);
         }
 
-        protected void Input_OnChanged(object source, FileSystemEventArgs e)
+        protected async void Input_OnChanged(object source, FileSystemEventArgs e)
         {
             if (e.ChangeType == WatcherChangeTypes.Created)
             {
                 _logger.LogInformation($"InBound Change Event Triggered by [{e.FullPath}]");
 
                 // do some work
+                var eventFile = new EventFile
+                {
+                    DirectoryName = e.FullPath,
+                    FileName = e.Name,
+                    //Attributes = ,
+                    //CreationTime = ,
+                    //Size =
+                };
+
+                using (var scope = _services.CreateScope())
+                {
+                    var _context = scope.ServiceProvider.GetRequiredService<ApplicationDataContext>();
+                    _context.EventFiles.Add(eventFile);
+                    await _context.SaveChangesAsync();
+                }
+
                 using (var scope = _services.CreateScope())
                 {
                     var serviceA = scope.ServiceProvider.GetRequiredService<IServiceA>();
