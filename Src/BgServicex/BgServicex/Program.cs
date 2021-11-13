@@ -55,8 +55,9 @@ namespace BgServicex
                 {
                     services.AddHostedService<Worker>();
                     services.Configure<AppSettings>(hostContext.Configuration.GetSection("AppSettings"));
-                    services.AddScoped<IServiceA, ServiceA>();
-                    services.AddScoped<IServiceB, ServiceB>();
+                    //services.AddScoped<IServiceA, ServiceA>();
+                    //services.AddScoped<IServiceB, ServiceB>();
+                    // services.AddScoped<IUserHelper, UserHelper>();
                     services.AddDbContext<ApplicationDataContext>(options =>
                                             options.UseSqlServer(
                                             hostContext.Configuration.GetSection("ConnectionStrings:DefaultConnection").Value));

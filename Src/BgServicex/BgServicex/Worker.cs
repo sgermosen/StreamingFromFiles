@@ -1,4 +1,5 @@
 using BgServicex.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -15,6 +16,7 @@ namespace BgServicex
         private readonly ILogger<Worker> _logger;
         private FileSystemWatcher _folderWatcher;
         private readonly string _inputFolder;
+        private readonly string _inputMachineUser;
         private readonly IServiceProvider _services;
         // private readonly ApplicationDataContext _context;
 
@@ -24,6 +26,7 @@ namespace BgServicex
             _services = services;
             //_context = context;
             _inputFolder = settings.Value.InputFolder;
+            _inputMachineUser = settings.Value.InputMachineUser;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -64,22 +67,28 @@ namespace BgServicex
                     DirectoryName = e.FullPath,
                     FileName = e.Name,
                     //Attributes = ,
-                    //CreationTime = ,
                     //Size =
                 };
 
                 using (var scope = _services.CreateScope())
                 {
                     var _context = scope.ServiceProvider.GetRequiredService<ApplicationDataContext>();
+
+                    var user = await _context.Users.FirstOrDefaultAsync(p => p.Email == _inputMachineUser);
+                    eventFile.UpdatedUser = user;
+                    eventFile.CreatedUser = user;
+                    eventFile.UpdatedBy = user.Id;
+                    eventFile.CreatedBy = user.Id;
+
                     _context.EventFiles.Add(eventFile);
                     await _context.SaveChangesAsync();
                 }
 
-                using (var scope = _services.CreateScope())
-                {
-                    var serviceA = scope.ServiceProvider.GetRequiredService<IServiceA>();
-                    serviceA.Run();
-                }
+                //using (var scope = _services.CreateScope())
+                //{
+                //    var serviceA = scope.ServiceProvider.GetRequiredService<IServiceA>();
+                //    serviceA.Run();
+                //}
 
                 _logger.LogInformation("Done with Inbound Change Event");
             }
