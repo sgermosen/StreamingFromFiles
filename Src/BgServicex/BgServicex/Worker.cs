@@ -44,7 +44,7 @@ namespace BgServicex
             }
 
             _logger.LogInformation($"Binding Events from Input Folder: {_inputFolder}");
-            _folderWatcher = new FileSystemWatcher(_inputFolder, "*.TXT")
+            _folderWatcher = new FileSystemWatcher(_inputFolder, "*.MP4")
             {
                 NotifyFilter = NotifyFilters.Attributes | NotifyFilters.CreationTime | NotifyFilters.LastWrite | NotifyFilters.FileName |
                                   NotifyFilters.DirectoryName | NotifyFilters.Size
@@ -66,7 +66,7 @@ namespace BgServicex
                 var eventFile = new EventFile
                 {
                     DirectoryName = e.FullPath,
-                    FileName = e.Name,
+                    OriginalFileName = e.Name,
                     //Attributes = ,
                     //Size =
                 };
@@ -78,6 +78,7 @@ namespace BgServicex
                     var fileupload = await _blobService.Upload(e.Name, e.FullPath);
                     eventFile.DirectoryInAzure = fileupload.AzureUrl;
                     eventFile.Size = fileupload.Size;
+                    eventFile.FileName = fileupload.FileName;
 
                     var _context = scope.ServiceProvider.GetRequiredService<ApplicationDataContext>();
                     var user = await _context.Users.FirstOrDefaultAsync(p => p.Email == _inputMachineUser);

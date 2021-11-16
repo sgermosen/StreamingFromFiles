@@ -1,4 +1,3 @@
-using BgServicex.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -58,8 +57,8 @@ namespace BgServicex
                     services.Configure<AppSettings>(hostContext.Configuration.GetSection("AppSettings"));
                     //services.AddScoped<IServiceA, ServiceA>();
                     //services.AddScoped<IServiceB, ServiceB>();
-                   services.AddScoped<IUploadFileService, UploadFileService>(); 
-                  //  services.AddScoped<IBlobHelper, BlobHelper>();
+                    services.AddScoped<IUploadFileService, UploadFileService>();
+                    //  services.AddScoped<IBlobHelper, BlobHelper>();
                     // services.AddScoped<IUserHelper, UserHelper>();
                     services.AddDbContext<ApplicationDataContext>(options =>
                                             options.UseSqlServer(

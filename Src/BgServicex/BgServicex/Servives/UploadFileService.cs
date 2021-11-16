@@ -4,6 +4,7 @@ using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace BgServicex
@@ -22,7 +23,7 @@ namespace BgServicex
             string keys = configuration["Blob:ConnectionString"];
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(keys);
             _blobClient = storageAccount.CreateCloudBlobClient();
-            _container = configuration["Blob:streamFiles"];
+            _container = configuration["Blob:ContainerName"];
 
         }
 
@@ -34,26 +35,22 @@ namespace BgServicex
 
             var containerObject = _blobClient.GetContainerReference(_container);
 
-            //check the container existance
             if (containerObject.CreateIfNotExistsAsync().Result)
-            {
                 await containerObject.SetPermissionsAsync(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
-            }
-            var fileobject = containerObject.GetBlockBlobReference(filename);
 
-            //check the file type
+            Guid newFileame = Guid.NewGuid();
+
+            var fileobject = containerObject.GetBlockBlobReference($"{newFileame}");
+
             var provider = new FileExtensionContentTypeProvider();
             if (!provider.TryGetContentType(filename, out string file_type))
-            {
                 file_type = "application/octet-stream";
-            }
 
             fileobject.Properties.ContentType = file_type;
             await fileobject.UploadFromByteArrayAsync(fileBytes, 0, fileBytes.Length);
-
-            string fileuploadURI = fileobject.Uri.AbsoluteUri;
-            _logger.LogInformation($"In Service Upload Done: {fileuploadURI}");
-            return new FileUploadedViewModel { AzureUrl = fileuploadURI, Size = fileBytes.Length };
+             
+            _logger.LogInformation($"In Service Upload Done: {fileobject.Uri.AbsoluteUri}");
+            return new FileUploadedViewModel { AzureUrl = fileobject.Uri.AbsoluteUri, Size = fileBytes.Length, FileName = fileobject.Name };
 
         }
 

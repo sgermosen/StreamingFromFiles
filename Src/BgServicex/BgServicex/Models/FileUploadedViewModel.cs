@@ -2,7 +2,8 @@
 {
     public class FileUploadedViewModel
     {
-        public int Size { get; set; }
         public string AzureUrl { get; set; }
+        public string FileName { get; set; }
+        public int Size { get; set; }
     }
 }
