@@ -5,6 +5,7 @@ using Microsoft.Azure.Storage.Blob;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace BgServicex
@@ -37,10 +38,11 @@ namespace BgServicex
 
             if (containerObject.CreateIfNotExistsAsync().Result)
                 await containerObject.SetPermissionsAsync(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
+            
+            var ext = Path.GetExtension(fullpath).ToString();
+            Guid newFileame = Guid.NewGuid()   ;
 
-            Guid newFileame = Guid.NewGuid();
-
-            var fileobject = containerObject.GetBlockBlobReference($"{newFileame}");
+            var fileobject = containerObject.GetBlockBlobReference($"{newFileame}{ext}");
 
             var provider = new FileExtensionContentTypeProvider();
             if (!provider.TryGetContentType(filename, out string file_type))
@@ -48,9 +50,14 @@ namespace BgServicex
 
             fileobject.Properties.ContentType = file_type;
             await fileobject.UploadFromByteArrayAsync(fileBytes, 0, fileBytes.Length);
-             
+
             _logger.LogInformation($"In Service Upload Done: {fileobject.Uri.AbsoluteUri}");
-            return new FileUploadedViewModel { AzureUrl = fileobject.Uri.AbsoluteUri, Size = fileBytes.Length, FileName = fileobject.Name };
+            return new FileUploadedViewModel
+            {
+                AzureUrl = fileobject.Uri.AbsoluteUri,
+                Size = fileBytes.Length,
+                FileName = fileobject.Name
+            };
 
         }
 
