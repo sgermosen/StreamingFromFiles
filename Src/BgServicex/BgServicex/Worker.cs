@@ -49,13 +49,14 @@ namespace BgServicex
                 NotifyFilter = NotifyFilters.Attributes | NotifyFilters.CreationTime | NotifyFilters.LastWrite | NotifyFilters.FileName |
                                   NotifyFilters.DirectoryName | NotifyFilters.Size
             };
-            _folderWatcher.Created += Input_OnChanged;
+            _folderWatcher.Created += Input_OnCreated;
+            //   _folderWatcher.Changed += Input_OnChanged;
             _folderWatcher.EnableRaisingEvents = true;
 
             return base.StartAsync(cancellationToken);
         }
 
-        protected async void Input_OnChanged(object source, FileSystemEventArgs e)
+        protected async void Input_OnCreated(object source, FileSystemEventArgs e)
         {
             if (e.ChangeType == WatcherChangeTypes.Created)
             {
@@ -72,8 +73,13 @@ namespace BgServicex
 
                 using (var scope = _services.CreateScope())
                 {
-                    var _context = scope.ServiceProvider.GetRequiredService<ApplicationDataContext>();
 
+                    var _blobService = scope.ServiceProvider.GetRequiredService<IUploadFileService>();
+                    var fileupload = await _blobService.Upload(e.Name, e.FullPath);
+                    eventFile.DirectoryInAzure = fileupload.AzureUrl;
+                    eventFile.Size = fileupload.Size;
+
+                    var _context = scope.ServiceProvider.GetRequiredService<ApplicationDataContext>();
                     var user = await _context.Users.FirstOrDefaultAsync(p => p.Email == _inputMachineUser);
                     eventFile.UpdatedUser = user;
                     eventFile.CreatedUser = user;
@@ -82,6 +88,7 @@ namespace BgServicex
 
                     _context.EventFiles.Add(eventFile);
                     await _context.SaveChangesAsync();
+
                 }
 
                 //using (var scope = _services.CreateScope())

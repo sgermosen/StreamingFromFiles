@@ -6,7 +6,8 @@
         public string Attributes { get; set; } 
         public string FileName { get; set; }
         public string DirectoryName { get; set; }
-        public string Size { get; set; }
+        public string DirectoryInAzure { get; set; }
+        public int? Size { get; set; }
 
     }
 }
