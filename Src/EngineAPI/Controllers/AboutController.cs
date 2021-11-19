@@ -29,7 +29,7 @@ namespace EngineAPI.Controllers
 
         [HttpGet]
         public string Get()
-        {
+        { 
             return Resource.About;
         }
 
