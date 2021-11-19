@@ -4,16 +4,11 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EngineAPI.Controllers
-{
-
-    //[Route("{culture:culture}/[controller]")]
+{ 
     [Route("[controller]")]
     [ApiController]
     public class AboutController : AppBaseController
     {
-        public AboutController()
-        {
-        }
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
@@ -33,10 +28,9 @@ namespace EngineAPI.Controllers
         }
 
         [HttpGet]
-        public string Get(string requestCultureInfo)
+        public string Get()
         {
-
-            return Resource.About;// localizer["About"];
+            return Resource.About;
         }
 
 
