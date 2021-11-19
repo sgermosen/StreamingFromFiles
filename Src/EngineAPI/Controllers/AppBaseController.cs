@@ -1,12 +1,71 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using AutoMapper.Configuration;
+using EngineAPI.Entities;
+using EngineAPI.Services;
+using EngineAPI.Utils;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace EngineAPI.Controllers
 {
     public class AppBaseController : ControllerBase
     {
+        public readonly UserManager<ApplicationUser> UserManager;
+        public readonly ApplicationDbContext Context;
+        public readonly IMapper Mapper;
+        public readonly IStorageSaver StorageSaver;
+
+        public readonly SignInManager<ApplicationUser> SignInManager;
+        public readonly IMailHelper MailHelper;
+        public readonly IAccountService UserService;
+
+        public AppBaseController(UserManager<ApplicationUser> userManager,
+      IMapper mapper, ApplicationDbContext context, 
+      SignInManager<ApplicationUser> signInManager, IMailHelper mailHelper, IAccountService userService)
+        {
+            UserService = userService;
+            UserManager = userManager;
+            Mapper = mapper;
+            Context = context; 
+            SignInManager = signInManager;
+            MailHelper = mailHelper;
+        }
+
+
+        public AppBaseController(UserManager<ApplicationUser> userManager,
+         IMapper mapper,
+         IStorageSaver storageSaver,
+           ApplicationDbContext context)
+        {
+            this.UserManager = userManager;
+            this.Mapper = mapper;
+            this.StorageSaver = storageSaver;
+            this.Context = context;
+        }
+
+        public AppBaseController(UserManager<ApplicationUser> userManager,
+         IMapper mapper,
+           ApplicationDbContext context)
+        {
+            this.UserManager = userManager;
+            this.Mapper = mapper;
+            this.Context = context;
+        }
+
+        internal async Task<ApplicationUser> GetConectedUser()
+        {
+            var email = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "email")?.Value;
+            if (string.IsNullOrEmpty(email))
+                return new ApplicationUser();
+            var user = await UserManager.FindByEmailAsync(email);
+            return user;
+        }
+       
         internal CultureInfo GetServerCulture()
         {
             // var dd =  HttpContext.Request.GetTypedHeaders().AcceptLanguage;
