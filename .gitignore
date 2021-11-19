@@ -350,3 +350,4 @@ MigrationBackup/
 .ionide/
 Src/WorkerService/WorkerService/appsettings.Development.json
 Src/BgServicex/BgServicex/appsettings.Development.json
+Src/EngineAPI/appsettings.Development.json
