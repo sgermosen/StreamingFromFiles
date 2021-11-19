@@ -1,11 +1,14 @@
 ﻿using EngineAPI.Localize;
+using EngineAPI.Resources;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using System.Globalization;
 
 namespace EngineAPI.Controllers
 {
 
-    [Route("{culture:culture}/[controller]")]
+    //[Route("{culture:culture}/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class AboutController : ControllerBase
     {
@@ -16,9 +19,12 @@ namespace EngineAPI.Controllers
         }
 
         [HttpGet]
-        public string Get()
+        public string Get(string requestCultureInfo)
         {
-            return localizer["About"];
+            CultureInfo cultureInfo = new CultureInfo(requestCultureInfo); // (request.CultureInfo);
+            Resource.Culture = cultureInfo;
+
+            return Resource.About;// localizer["About"];
         }
     }
 

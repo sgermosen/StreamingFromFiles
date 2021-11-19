@@ -4,7 +4,8 @@ using Microsoft.Extensions.Localization;
 
 namespace EngineAPI.Controllers
 {
-    [Route("{culture:culture}/[controller]")]
+    // [Route("{culture:culture}/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class HomeController : ControllerBase
     {
