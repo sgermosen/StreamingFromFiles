@@ -72,6 +72,21 @@ namespace EngineAPI
             var localizeOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(localizeOptions.Value);
 
+            IList<CultureInfo> supportedCultures = new List<CultureInfo>
+            {
+                new CultureInfo("en-US"), //English US
+                new CultureInfo("fr-FR"), //Arabic SY
+                new CultureInfo("es-ES"), //Arabic SY
+            };
+            var localizationOptions = new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("en-US"), //English US will be the default culture (for new visitors)
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            };
+
+            app.UseRequestLocalization(localizationOptions);
+
             app.UseRouting();
 
             app.UseAuthorization();
