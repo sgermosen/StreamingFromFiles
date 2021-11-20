@@ -2,6 +2,8 @@
 using Domain;
 using Domain.Entities;
 using EngineAPI.Resources;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -9,8 +11,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EngineAPI.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class AboutController : AppBaseController
     {
         public AboutController(UserManager<ApplicationUser> userManager, IMapper mapper, ApplicationDataContext context) : base(userManager, mapper, context)
@@ -19,6 +22,7 @@ namespace EngineAPI.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
+        [HttpPost("setCulture")] 
         public IActionResult SetCulture(string culture)//, string returnUrl)
         {
             HttpContext.Response.Cookies.Append(
@@ -37,6 +41,7 @@ namespace EngineAPI.Controllers
         [HttpGet]
         public string Get()
         {
+            var user = GetConectedUser();
             return Resource.About;
         }
 

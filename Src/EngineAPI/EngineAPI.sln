@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EngineAPI", "EngineAPI.csproj", "{792EEBC4-B5FA-418A-AA32-DD1F63AEB056}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BgServicex", "..\BgServicex\BgServicex\BgServicex.csproj", "{6D143D71-5590-4EFF-9CCC-2938DD5313BD}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "..\Domain\Domain.csproj", "{4CF94E05-DBA5-4D66-9F10-C5006628CF64}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Transversal", "..\Transversal\Transversal.csproj", "{3BCACA62-B913-47D9-A3A1-84BD038CB632}"
@@ -21,10 +19,6 @@ Global
 		{792EEBC4-B5FA-418A-AA32-DD1F63AEB056}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{792EEBC4-B5FA-418A-AA32-DD1F63AEB056}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{792EEBC4-B5FA-418A-AA32-DD1F63AEB056}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D143D71-5590-4EFF-9CCC-2938DD5313BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D143D71-5590-4EFF-9CCC-2938DD5313BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D143D71-5590-4EFF-9CCC-2938DD5313BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D143D71-5590-4EFF-9CCC-2938DD5313BD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4CF94E05-DBA5-4D66-9F10-C5006628CF64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4CF94E05-DBA5-4D66-9F10-C5006628CF64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CF94E05-DBA5-4D66-9F10-C5006628CF64}.Release|Any CPU.ActiveCfg = Release|Any CPU
