@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using EngineAPI.Entities;
+using Domain;
+using Domain.Entities;
 using EngineAPI.Models;
 using EngineAPI.Utils;
 //using BC = BCrypt.Net.BCrypt;
@@ -35,14 +36,14 @@ namespace EngineAPI.Services
     public class AccountService : IAccountService
     {
         private readonly IStorageSaver _storageSaver;
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDataContext _context;
         private readonly IMapper _mapper;
         private readonly AppSettings _appSettings;
         private readonly IMailHelper _emailService;
         private IConfiguration _configuration;
         private UserManager<ApplicationUser> _userManger;
         public AccountService(
-            ApplicationDbContext context,
+            ApplicationDataContext context,
             IMapper mapper,
             IOptions<AppSettings> appSettings, IConfiguration configuration,
             IMailHelper emailService, UserManager<ApplicationUser> userManager, IStorageSaver storageSaver)
@@ -76,7 +77,7 @@ namespace EngineAPI.Services
                 Identification = model.Identification,
                 FullName = model.FullName,
                 Email = model.Email,
-                UserName = model.Email 
+                UserName = model.Email
             };
 
             var result = await _userManger.CreateAsync(identityUser, model.Password);

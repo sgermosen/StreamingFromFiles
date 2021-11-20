@@ -6,13 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Helpers\**" />
-    <Content Remove="Helpers\**" />
-    <EmbeddedResource Remove="Helpers\**" />
-    <None Remove="Helpers\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Models\LoginViewModel.cs" />
     <Compile Remove="Servives\IServiceA.cs" />
     <Compile Remove="Servives\IServiceB.cs" />
@@ -42,6 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Helpers\" />
+    <ProjectReference Include="..\..\Domain\Domain.csproj" />
   </ItemGroup>
 </Project>

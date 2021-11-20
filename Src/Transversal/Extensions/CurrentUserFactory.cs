@@ -1,9 +1,9 @@
-﻿using BgServicex.Models;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System.Security.Claims;
+using Transversal.Models;
 
-namespace BgServicex.Extensions
+namespace Transversal.Extensions
 {
     public interface ICurrentUserFactory
     {

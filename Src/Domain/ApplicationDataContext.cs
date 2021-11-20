@@ -1,17 +1,17 @@
-﻿using BgServicex.Data;
-using BgServicex.Extensions;
-using BgServicex.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using Domain.Entities;
+using Domain.Helpers;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Transversal.Extensions;
+using Transversal.Models;
 
-namespace BgServicex
+namespace Domain
 {
-    public class ApplicationDataContext : IdentityDbContext<IdentityUser>
+    public class ApplicationDataContext : IdentityDbContext<ApplicationUser>
     {
         private readonly ICurrentUserFactory _currentUser;
 
@@ -28,6 +28,8 @@ namespace BgServicex
         }
 
         public DbSet<EventFile> EventFiles { get; set; }
+        public DbSet<Image> Images { get; set; }
+        public DbSet<ImageType> ImageTypes { get; set; }
 
         public override int SaveChanges()
         {

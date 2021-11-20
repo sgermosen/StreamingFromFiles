@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Domain.Entities;
 using EngineAPI.DTOs;
-using EngineAPI.Entities;
 using NetTopologySuite.Geometries;
 
 namespace EngineAPI.Utils

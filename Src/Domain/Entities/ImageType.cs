@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EngineAPI.Entities
+namespace Domain.Entities
 {
     public class ImageType
     {

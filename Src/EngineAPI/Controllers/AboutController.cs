@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using EngineAPI.Entities;
+using Domain;
+using Domain.Entities;
 using EngineAPI.Resources;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -7,12 +8,12 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EngineAPI.Controllers
-{ 
+{
     [Route("[controller]")]
     [ApiController]
     public class AboutController : AppBaseController
     {
-        public AboutController(UserManager<ApplicationUser> userManager, IMapper mapper, ApplicationDbContext context) : base(userManager, mapper, context)
+        public AboutController(UserManager<ApplicationUser> userManager, IMapper mapper, ApplicationDataContext context) : base(userManager, mapper, context)
         {
         }
 
@@ -35,7 +36,7 @@ namespace EngineAPI.Controllers
 
         [HttpGet]
         public string Get()
-        { 
+        {
             return Resource.About;
         }
 

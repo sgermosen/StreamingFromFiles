@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain.Entities;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BgServicex.Data
+namespace Domain.Helpers
 {
     public class AuditEntity //: BaseEntity
     {
@@ -11,16 +11,16 @@ namespace BgServicex.Data
         public DateTime? CreatedAt { get; set; }
         public string CreatedBy { get; set; }
         [ForeignKey("CreatedBy")]
-        public IdentityUser CreatedUser { get; set; }
+        public ApplicationUser CreatedUser { get; set; }
 
         public DateTime? UpdatedAt { get; set; }
         public string UpdatedBy { get; set; }
         [ForeignKey("UpdatedBy")]
-        public IdentityUser UpdatedUser { get; set; }
+        public ApplicationUser UpdatedUser { get; set; }
 
         public DateTime? DeletedAt { get; set; }
         public string DeletedBy { get; set; }
         [ForeignKey("DeletedBy")]
-        public IdentityUser DeletedUser { get; set; }
+        public ApplicationUser DeletedUser { get; set; }
     }
 }

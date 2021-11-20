@@ -1,4 +1,4 @@
-﻿using EngineAPI.Entities;
+﻿using Domain;
 using EngineAPI.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -22,7 +22,7 @@ namespace EngineAPI.Middleware
             _appSettings = appSettings.Value;
         }
 
-        public async Task Invoke(HttpContext context, ApplicationDbContext dataContext)
+        public async Task Invoke(HttpContext context, ApplicationDataContext dataContext)
         {
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
@@ -32,7 +32,7 @@ namespace EngineAPI.Middleware
             await _next(context);
         }
 
-        private async Task attachAccountToContext(HttpContext context, ApplicationDbContext dataContext, string token)
+        private async Task attachAccountToContext(HttpContext context, ApplicationDataContext dataContext, string token)
         {
             try
             {

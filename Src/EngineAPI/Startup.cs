@@ -1,6 +1,7 @@
 using AutoMapper;
+using Domain;
+using Domain.Entities;
 using EngineAPI.Behaviors;
-using EngineAPI.Entities;
 using EngineAPI.Filters;
 using EngineAPI.Services;
 using EngineAPI.Utils;
@@ -54,7 +55,7 @@ namespace EngineAPI
 
             services.AddHttpContextAccessor();
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<ApplicationDataContext>(options =>
                      options.UseSqlServer(Configuration.GetConnectionString("defaultConnection"),
                              sqlServer => sqlServer.UseNetTopologySuite()));
 
@@ -70,7 +71,7 @@ namespace EngineAPI
                 cfg.Password.RequireUppercase = false;
                 cfg.Password.RequiredLength = 6;
             })
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<ApplicationDataContext>()
                 .AddDefaultTokenProviders();
 
 

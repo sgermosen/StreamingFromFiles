@@ -1,4 +1,4 @@
-﻿namespace BgServicex.Data
+﻿namespace Domain.Helpers
 {
     public interface IBaseEntity
     {

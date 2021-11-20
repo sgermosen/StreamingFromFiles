@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
-namespace EngineAPI.Entities
+namespace Domain.Entities
 {
     public class ApplicationUser : IdentityUser
     {

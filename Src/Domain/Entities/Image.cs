@@ -1,7 +1,7 @@
-﻿using EngineAPI.Utils;
-using System;
+﻿using System;
+using Transversal.Utils;
 
-namespace EngineAPI.Entities
+namespace Domain.Entities
 {
     public class Image
     {

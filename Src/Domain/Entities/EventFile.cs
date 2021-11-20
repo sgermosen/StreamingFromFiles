@@ -1,4 +1,6 @@
-﻿namespace BgServicex.Data
+﻿using Domain.Helpers;
+
+namespace Domain.Entities
 {
     public class EventFile : AuditEntity, IBaseEntity, ISoftDeleted
     {

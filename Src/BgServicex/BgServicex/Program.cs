@@ -1,3 +1,4 @@
+using Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -63,7 +64,7 @@ namespace BgServicex
                     services.AddDbContext<ApplicationDataContext>(options =>
                                             options.UseSqlServer(
                                             hostContext.Configuration.GetSection("ConnectionStrings:DefaultConnection").Value));
-                    //       services.AddIdentity<IdentityUser, IdentityRole>(cfg =>
+                    //       services.AddIdentity<ApplicationUser, IdentityRole>(cfg =>
                     //       {
                     //           cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
                     //           cfg.SignIn.RequireConfirmedEmail = false;

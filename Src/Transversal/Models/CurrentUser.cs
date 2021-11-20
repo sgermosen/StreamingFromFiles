@@ -1,4 +1,4 @@
-﻿namespace BgServicex.Models
+﻿namespace Transversal.Models
 {
     public class CurrentUser
     {

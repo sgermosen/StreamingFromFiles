@@ -1,7 +1,8 @@
 ﻿
 using AutoMapper;
+using Domain;
+using Domain.Entities;
 using EngineAPI.DTOs;
-using EngineAPI.Entities;
 using EngineAPI.Extensions;
 using EngineAPI.Models;
 using EngineAPI.Services;
@@ -29,11 +30,12 @@ namespace EngineAPI.Controllers
     {
         private readonly IConfiguration configuration;
 
-        public AccountController(UserManager<ApplicationUser> userManager, IMapper mapper, ApplicationDbContext context, SignInManager<ApplicationUser> signInManager, IMailHelper mailHelper, IAccountService userService, IConfiguration configuration) : base(userManager, mapper, context, signInManager, mailHelper, userService)
+        public AccountController(UserManager<ApplicationUser> userManager, IMapper mapper, ApplicationDataContext context, SignInManager<ApplicationUser> signInManager, IMailHelper mailHelper, IAccountService userService, IConfiguration configuration) : base(userManager, mapper, context, signInManager, mailHelper, userService)
         {
             this.configuration = configuration;
         }
 
+        //TODO: Verify the correct work of this
         // /api/auth/register
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterViewModel model)

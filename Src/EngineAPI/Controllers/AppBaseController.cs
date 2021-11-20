@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AutoMapper.Configuration;
-using EngineAPI.Entities;
+using Domain;
+using Domain.Entities;
 using EngineAPI.Services;
 using EngineAPI.Utils;
 using Microsoft.AspNetCore.Http;
@@ -16,7 +16,7 @@ namespace EngineAPI.Controllers
     public class AppBaseController : ControllerBase
     {
         public readonly UserManager<ApplicationUser> UserManager;
-        public readonly ApplicationDbContext Context;
+        public readonly ApplicationDataContext Context;
         public readonly IMapper Mapper;
         public readonly IStorageSaver StorageSaver;
 
@@ -25,13 +25,13 @@ namespace EngineAPI.Controllers
         public readonly IAccountService UserService;
 
         public AppBaseController(UserManager<ApplicationUser> userManager,
-      IMapper mapper, ApplicationDbContext context, 
+      IMapper mapper, ApplicationDataContext context,
       SignInManager<ApplicationUser> signInManager, IMailHelper mailHelper, IAccountService userService)
         {
             UserService = userService;
             UserManager = userManager;
             Mapper = mapper;
-            Context = context; 
+            Context = context;
             SignInManager = signInManager;
             MailHelper = mailHelper;
         }
@@ -40,7 +40,7 @@ namespace EngineAPI.Controllers
         public AppBaseController(UserManager<ApplicationUser> userManager,
          IMapper mapper,
          IStorageSaver storageSaver,
-           ApplicationDbContext context)
+           ApplicationDataContext context)
         {
             this.UserManager = userManager;
             this.Mapper = mapper;
@@ -50,7 +50,7 @@ namespace EngineAPI.Controllers
 
         public AppBaseController(UserManager<ApplicationUser> userManager,
          IMapper mapper,
-           ApplicationDbContext context)
+           ApplicationDataContext context)
         {
             this.UserManager = userManager;
             this.Mapper = mapper;
@@ -65,7 +65,7 @@ namespace EngineAPI.Controllers
             var user = await UserManager.FindByEmailAsync(email);
             return user;
         }
-       
+
         internal CultureInfo GetServerCulture()
         {
             // var dd =  HttpContext.Request.GetTypedHeaders().AcceptLanguage;
