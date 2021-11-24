@@ -79,5 +79,10 @@ namespace EngineAPI.Utils
             await DeleteFile(route, container);
             return await SaveFile(container, file);
         }
+
+        public Task<byte[]> GetFileAsync(string fileName, string containerName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
