@@ -1,10 +1,10 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
 using Domain;
 using Domain.Entities;
 using EngineAPI.DTOs;
 using EngineAPI.Extensions;
 using EngineAPI.Models;
+using EngineAPI.Resources;
 using EngineAPI.Services;
 using EngineAPI.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -36,11 +36,10 @@ namespace EngineAPI.Controllers
         }
 
         //TODO: Verify the correct work of this
-        // /api/auth/register
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterViewModel model)
         {
-            if (!ModelState.IsValid) return BadRequest("Some properties are not valid"); // Status code: 400
+            if (!ModelState.IsValid) return BadRequest(Resource.ModelInvalid); // Status code: 400
             var result = await UserService.RegisterUserAsync(model);
 
             if (result.IsSuccess)
@@ -50,27 +49,23 @@ namespace EngineAPI.Controllers
 
         }
 
-        // /api/auth/login
         [HttpPost("loginAsync")]
         public async Task<IActionResult> LoginAsync([FromBody] LoginViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return BadRequest(Resource.ModelInvalid);
+
+            var result = await UserService.LoginUserAsync(model);
+
+            if (result.IsSuccess)
             {
-                var result = await UserService.LoginUserAsync(model);
-
-                if (result.IsSuccess)
-                {
-                    MailHelper.SendMail(model.Email, "New login", "<h1>Hey!, new login to your account noticed</h1><p>New login to your account at " + DateTime.Now + "</p>");
-                    return Ok(result);
-                }
-
-                return BadRequest(result);
+                MailHelper.SendMail(model.Email, Resource.NewLogin, $"<h1>{Resource.NewLoginMessage}" + DateTime.Now + "</p>");
+                return Ok(result);
             }
 
-            return BadRequest("Some properties are not valid");
+            return BadRequest(result);
         }
 
-        // /api/auth/confirmemail?userid&token
         [HttpGet("confirmEmail")]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
@@ -116,21 +111,18 @@ namespace EngineAPI.Controllers
 
         }
 
-        // api/auth/resetpassword
         [HttpPost("resetPassword")]
         public async Task<IActionResult> ResetPassword([FromForm] ResetPasswordViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                var result = await UserService.ResetPasswordAsync(model);
+            if (!ModelState.IsValid)
+                return BadRequest(Resource.ModelInvalid);
 
-                if (result.IsSuccess)
-                    return Ok(result);
+            var result = await UserService.ResetPasswordAsync(model);
 
-                return BadRequest(result);
-            }
+            if (result.IsSuccess)
+                return Ok(result);
 
-            return BadRequest("Some properties are not valid");
+            return BadRequest(result);
             //   var user = await GetConectedUser();
             //    if (user != null)
             //    {
@@ -151,19 +143,51 @@ namespace EngineAPI.Controllers
         public async Task<ActionResult> ChangePassword(ChangePasswordDTO model)
         {
             var user = await GetConectedUser();
-            if (user != null)
-            {
-                var result = await UserManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
-                if (result.Succeeded)
-                    return Ok();
-                else
-                    return BadRequest(result.Errors.FirstOrDefault().Description);
-            }
-            return BadRequest("Usuario no encontrado.");
+            if (user == null)
+                return BadRequest(Resource.UserNotFound);
+            var result = await UserManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+                return Ok();
+            else
+                return BadRequest(result.Errors.FirstOrDefault().Description);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsAdmin")]
+        [HttpPost("bulkCreate")]
+        public async Task<ActionResult<Response>> BulkCreate([FromBody] UserBulkCreationDTO model)
+        {
+            foreach (var user in model.Users)
+            {
+                IdentityResult result = await CreateUserAsync(user);
+                if (!result.Succeeded)
+                    return BadRequest(result.Errors);
+            }
+            return Ok();
+
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsAdmin")]
         [HttpPost("create")]
         public async Task<ActionResult<AuthenticationResponse>> Create([FromBody] UserCreationDTO model)
+        {
+            IdentityResult result = await CreateUserAsync(model);
+            if (result.Succeeded)
+                return await CreateToken(model);
+            else
+                return BadRequest(result.Errors);
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<AuthenticationResponse>> Login([FromBody] UserCredentials credentials)
+        {
+            var result = await SignInManager.PasswordSignInAsync(credentials.Email, credentials.Password, isPersistent: false, lockoutOnFailure: false);
+            if (result.Succeeded)
+                return await CreateToken(credentials);
+            else
+                return BadRequest(Resource.LoginFail);
+        }
+
+        private async Task<IdentityResult> CreateUserAsync(UserCreationDTO model)
         {
             var user = new ApplicationUser
             {
@@ -175,28 +199,7 @@ namespace EngineAPI.Controllers
                 EmployeeNumber = model.EmployeeNumber
             };
             var result = await UserManager.CreateAsync(user, model.Password);
-            if (result.Succeeded)
-            {
-                return await CreateToken(model);
-            }
-            else
-            {
-                return BadRequest(result.Errors);
-            }
-        }
-
-        [HttpPost("login")]
-        public async Task<ActionResult<AuthenticationResponse>> Login([FromBody] UserCredentials credentials)
-        {
-            var result = await SignInManager.PasswordSignInAsync(credentials.Email, credentials.Password, isPersistent: false, lockoutOnFailure: false);
-            if (result.Succeeded)
-            {
-                return await CreateToken(credentials);
-            }
-            else
-            {
-                return BadRequest("Login Fail!!!");
-            }
+            return result;
         }
 
         private async Task<AuthenticationResponse> CreateToken(UserCredentials credentials)
@@ -219,7 +222,7 @@ namespace EngineAPI.Controllers
             }
             catch (Exception ex)
             {
-                throw;
+                throw ;
             }
 
             var expiration = DateTime.UtcNow.AddYears(1);

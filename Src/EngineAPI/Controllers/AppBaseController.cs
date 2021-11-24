@@ -18,8 +18,7 @@ namespace EngineAPI.Controllers
         public readonly UserManager<ApplicationUser> UserManager;
         public readonly ApplicationDataContext Context;
         public readonly IMapper Mapper;
-        public readonly IStorageSaver StorageSaver;
-
+        public readonly IStorageManager StorageManager;
         public readonly SignInManager<ApplicationUser> SignInManager;
         public readonly IMailHelper MailHelper;
         public readonly IAccountService UserService;
@@ -36,23 +35,15 @@ namespace EngineAPI.Controllers
             MailHelper = mailHelper;
         }
 
-
-        public AppBaseController(UserManager<ApplicationUser> userManager,
-         IMapper mapper,
-         IStorageSaver storageSaver,
-           ApplicationDataContext context)
+        public AppBaseController(IMapper mapper, IStorageManager storageSaver, ApplicationDataContext context)
         {
-            this.UserManager = userManager;
             this.Mapper = mapper;
-            this.StorageSaver = storageSaver;
+            this.StorageManager = storageSaver;
             this.Context = context;
         }
 
-        public AppBaseController(UserManager<ApplicationUser> userManager,
-         IMapper mapper,
-           ApplicationDataContext context)
+        public AppBaseController(IMapper mapper, ApplicationDataContext context)
         {
-            this.UserManager = userManager;
             this.Mapper = mapper;
             this.Context = context;
         }

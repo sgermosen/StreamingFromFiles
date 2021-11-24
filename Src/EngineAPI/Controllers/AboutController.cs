@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using Domain;
-using Domain.Entities;
 using EngineAPI.Resources;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,13 +14,13 @@ namespace EngineAPI.Controllers
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class AboutController : AppBaseController
     {
-        public AboutController(UserManager<ApplicationUser> userManager, IMapper mapper, ApplicationDataContext context) : base(userManager, mapper, context)
+        public AboutController(IMapper mapper, ApplicationDataContext context) : base(mapper, context)
         {
         }
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        [HttpPost("setCulture")] 
+        [HttpPost("setCulture")]
         public IActionResult SetCulture(string culture)//, string returnUrl)
         {
             HttpContext.Response.Cookies.Append(

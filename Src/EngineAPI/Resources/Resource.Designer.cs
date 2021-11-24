@@ -70,11 +70,290 @@ namespace EngineAPI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current Password.
+        /// </summary>
+        public static string ActualPass {
+            get {
+                return ResourceManager.GetString("ActualPass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please click the below link to verify your email address:.
+        /// </summary>
+        public static string BelowLink {
+            get {
+                return ResourceManager.GetString("BelowLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please use the below token to verify your email address with the.
+        /// </summary>
+        public static string BelowToken {
+            get {
+                return ResourceManager.GetString("BelowToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clicking here.
+        /// </summary>
+        public static string ClickHere {
+            get {
+                return ResourceManager.GetString("ClickHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm your email.
+        /// </summary>
+        public static string ConfirmEmail {
+            get {
+                return ResourceManager.GetString("ConfirmEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please confirm your email by.
+        /// </summary>
+        public static string ConfirmEmailMsg {
+            get {
+                return ResourceManager.GetString("ConfirmEmailMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm password doesn&apos;t match with the password.
+        /// </summary>
+        public static string ConfirmPassDosntMatch {
+            get {
+                return ResourceManager.GetString("ConfirmPassDosntMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email confirmed successfully!.
+        /// </summary>
+        public static string EmailConfirmed {
+            get {
+                return ResourceManager.GetString("EmailConfirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email was not confirmed.
+        /// </summary>
+        public static string EmailNotConfirmed {
+            get {
+                return ResourceManager.GetString("EmailNotConfirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Follow the instructions to reset your password.
+        /// </summary>
+        public static string FallowToReset {
+            get {
+                return ResourceManager.GetString("FallowToReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First Letter must be UpperCase.
+        /// </summary>
+        public static string FirstLetterUppercaseError {
+            get {
+                return ResourceManager.GetString("FirstLetterUppercaseError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to From Home.
         /// </summary>
         public static string Home {
             get {
                 return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Password.
+        /// </summary>
+        public static string InvalidPassword {
+            get {
+                return ResourceManager.GetString("InvalidPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login Fail!!!.
+        /// </summary>
+        public static string LoginFail {
+            get {
+                return ResourceManager.GetString("LoginFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Model Error: Some properties are not valid.
+        /// </summary>
+        public static string ModelInvalid {
+            get {
+                return ResourceManager.GetString("ModelInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Model is null.
+        /// </summary>
+        public static string ModelNull {
+            get {
+                return ResourceManager.GetString("ModelNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Login!!!.
+        /// </summary>
+        public static string NewLogin {
+            get {
+                return ResourceManager.GetString("NewLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hey!, new login to your account noticed&lt;/h1&gt;&lt;p&gt;New login to your account at .
+        /// </summary>
+        public static string NewLoginMessage {
+            get {
+                return ResourceManager.GetString("NewLoginMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no user with that Email address.
+        /// </summary>
+        public static string NoUserWithThatEmail {
+            get {
+                return ResourceManager.GetString("NoUserWithThatEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password has been reset successfully!.
+        /// </summary>
+        public static string PasswordWasReset {
+            get {
+                return ResourceManager.GetString("PasswordWasReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset Password.
+        /// </summary>
+        public static string ResetPass {
+            get {
+                return ResourceManager.GetString("ResetPass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset password URL has been sent to the email successfully!.
+        /// </summary>
+        public static string ResetPassUrlWasSend {
+            get {
+                return ResourceManager.GetString("ResetPassUrlWasSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign-up Verification API - Verify Email.
+        /// </summary>
+        public static string SignUpVerification {
+            get {
+                return ResourceManager.GetString("SignUpVerification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something went wrong.
+        /// </summary>
+        public static string SomethingWrong {
+            get {
+                return ResourceManager.GetString("SomethingWrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thanks for registering!.
+        /// </summary>
+        public static string ThanksForRegister {
+            get {
+                return ResourceManager.GetString("ThanksForRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To reset your password.
+        /// </summary>
+        public static string ToResetMsg {
+            get {
+                return ResourceManager.GetString("ToResetMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User created successfully!.
+        /// </summary>
+        public static string UserCreated {
+            get {
+                return ResourceManager.GetString("UserCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User was not created.
+        /// </summary>
+        public static string UserNotCreated {
+            get {
+                return ResourceManager.GetString("UserNotCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User no found!.
+        /// </summary>
+        public static string UserNotFound {
+            get {
+                return ResourceManager.GetString("UserNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Value given is not of the correct Type.
+        /// </summary>
+        public static string ValueIsNotOfCorrectType {
+            get {
+                return ResourceManager.GetString("ValueIsNotOfCorrectType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verify Email.
+        /// </summary>
+        public static string VerifyEmail {
+            get {
+                return ResourceManager.GetString("VerifyEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to.
+        /// </summary>
+        public static string WelcomeTo {
+            get {
+                return ResourceManager.GetString("WelcomeTo", resourceCulture);
             }
         }
     }

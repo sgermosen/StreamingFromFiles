@@ -123,4 +123,97 @@
   <data name="Home" xml:space="preserve">
     <value>From Home</value>
   </data>
+  <data name="ModelNull" xml:space="preserve">
+    <value>The Model is null</value>
+  </data>
+  <data name="ConfirmPassDosntMatch" xml:space="preserve">
+    <value>Confirm password doesn't match with the password</value>
+  </data>
+  <data name="ModelInvalid" xml:space="preserve">
+    <value>Model Error: Some properties are not valid</value>
+  </data>
+  <data name="LoginFail" xml:space="preserve">
+    <value>Login Fail!!!</value>
+  </data>
+  <data name="NewLogin" xml:space="preserve">
+    <value>New Login!!!</value>
+  </data>
+  <data name="NewLoginMessage" xml:space="preserve">
+    <value>Hey!, new login to your account noticed&lt;/h1&gt;&lt;p&gt;New login to your account at </value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>User no found!</value>
+  </data>
+  <data name="ConfirmEmail" xml:space="preserve">
+    <value>Confirm your email</value>
+  </data>
+  <data name="WelcomeTo" xml:space="preserve">
+    <value>Welcome to</value>
+  </data>
+  <data name="ConfirmEmailMsg" xml:space="preserve">
+    <value>Please confirm your email by</value>
+  </data>
+  <data name="ClickHere" xml:space="preserve">
+    <value>Clicking here</value>
+  </data>
+  <data name="UserCreated" xml:space="preserve">
+    <value>User created successfully!</value>
+  </data>
+  <data name="UserNotCreated" xml:space="preserve">
+    <value>User was not created</value>
+  </data>
+  <data name="NoUserWithThatEmail" xml:space="preserve">
+    <value>There is no user with that Email address</value>
+  </data>
+  <data name="InvalidPassword" xml:space="preserve">
+    <value>Invalid Password</value>
+  </data>
+  <data name="EmailConfirmed" xml:space="preserve">
+    <value>Email confirmed successfully!</value>
+  </data>
+  <data name="EmailNotConfirmed" xml:space="preserve">
+    <value>Email was not confirmed</value>
+  </data>
+  <data name="BelowLink" xml:space="preserve">
+    <value>Please click the below link to verify your email address:</value>
+  </data>
+  <data name="BelowToken" xml:space="preserve">
+    <value>Please use the below token to verify your email address with the</value>
+  </data>
+  <data name="ResetPass" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="FallowToReset" xml:space="preserve">
+    <value>Follow the instructions to reset your password</value>
+  </data>
+  <data name="ToResetMsg" xml:space="preserve">
+    <value>To reset your password</value>
+  </data>
+  <data name="ResetPassUrlWasSend" xml:space="preserve">
+    <value>Reset password URL has been sent to the email successfully!</value>
+  </data>
+  <data name="PasswordWasReset" xml:space="preserve">
+    <value>Password has been reset successfully!</value>
+  </data>
+  <data name="SomethingWrong" xml:space="preserve">
+    <value>Something went wrong</value>
+  </data>
+  <data name="ThanksForRegister" xml:space="preserve">
+    <value>Thanks for registering!</value>
+  </data>
+  <data name="VerifyEmail" xml:space="preserve">
+    <value>Verify Email</value>
+  </data>
+  <data name="SignUpVerification" xml:space="preserve">
+    <value>Sign-up Verification API - Verify Email</value>
+  </data>
+  <data name="ActualPass" xml:space="preserve">
+    <value>Current Password</value>
+  </data>
+  <data name="ValueIsNotOfCorrectType" xml:space="preserve">
+    <value>The Value given is not of the correct Type</value>
+  </data>
+  <data name="FirstLetterUppercaseError" xml:space="preserve">
+    <value>First Letter must be UpperCase</value>
+  </data>
 </root>

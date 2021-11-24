@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 
 namespace EngineAPI.Utils
 {
-    public interface IStorageSaver
+    public interface IStorageManager
     {
+        Task<byte[]> GetFileAsync(string fileName, string containerName); 
         Task DeleteFile(string route, string container);
         Task<string> EditFile(string container, IFormFile file, string route);
         Task<string> SaveFile(string container, IFormFile file);

@@ -2,6 +2,7 @@
 using Domain;
 using Domain.Entities;
 using EngineAPI.Models;
+using EngineAPI.Resources;
 using EngineAPI.Utils;
 //using BC = BCrypt.Net.BCrypt;
 using Microsoft.AspNetCore.Identity;
@@ -35,23 +36,23 @@ namespace EngineAPI.Services
 
     public class AccountService : IAccountService
     {
-        private readonly IStorageSaver _storageSaver;
+        private readonly IStorageManager _storageSaver;
         private readonly ApplicationDataContext _context;
-        private readonly IMapper _mapper;
+      //  private readonly IMapper _mapper;
         private readonly AppSettings _appSettings;
         private readonly IMailHelper _emailService;
         private IConfiguration _configuration;
         private UserManager<ApplicationUser> _userManger;
         public AccountService(
             ApplicationDataContext context,
-            IMapper mapper,
+           // IMapper mapper,
             IOptions<AppSettings> appSettings, IConfiguration configuration,
-            IMailHelper emailService, UserManager<ApplicationUser> userManager, IStorageSaver storageSaver)
+            IMailHelper emailService, UserManager<ApplicationUser> userManager, IStorageManager storageSaver)
         {
             _storageSaver = storageSaver;
             _configuration = configuration;
             _context = context;
-            _mapper = mapper;
+         //   _mapper = mapper;
             _appSettings = appSettings.Value;
             _emailService = emailService;
             _userManger = userManager;
@@ -61,12 +62,12 @@ namespace EngineAPI.Services
         public async Task<UserManagerResponse> RegisterUserAsync(RegisterViewModel model)
         {
             if (model == null)
-                throw new NullReferenceException("Reigster Model is null");
+                throw new NullReferenceException(Resource.ModelNull);
 
             if (model.Password != model.ConfirmPassword)
                 return new UserManagerResponse
                 {
-                    Message = "Confirm password doesn't match the password",
+                    Message = Resource.ConfirmPassDosntMatch,
                     IsSuccess = false,
                 };
 
@@ -96,21 +97,21 @@ namespace EngineAPI.Services
                 var encodedEmailToken = Encoding.UTF8.GetBytes(confirmEmailToken);
                 var validEmailToken = WebEncoders.Base64UrlEncode(encodedEmailToken);
 
-                string url = $"{_configuration["AppUrl"]}/api/auth/confirmemail?userid={identityUser.Id}&token={validEmailToken}";
+                string url = $"{_configuration["AppUrl"]}/api/account/confirmemail?userid={identityUser.Id}&token={validEmailToken}";
 
-                _emailService.SendMail(identityUser.Email, "Confirm your email", $"<h1>Welcome to Auth Demo</h1>" +
-                  $"<p>Please confirm your email by <a href='{url}'>Clicking here</a></p>");
+                _emailService.SendMail(identityUser.Email, Resource.ConfirmEmail, $"<h1>{Resource.WelcomeTo} {StaticValues.AppName}</h1>" +
+                  $"<p>{Resource.ConfirmEmailMsg} <a href='{url}'>{Resource.ClickHere}</a></p>");
 
                 return new UserManagerResponse
                 {
-                    Message = "User created successfully!",
+                    Message = Resource.UserCreated ,
                     IsSuccess = true,
                 };
             }
 
             return new UserManagerResponse
             {
-                Message = "User did not create",
+                Message = Resource.UserNotCreated,
                 IsSuccess = false,
                 Errors = result.Errors.Select(e => e.Description)
             };
@@ -125,7 +126,7 @@ namespace EngineAPI.Services
             {
                 return new UserManagerResponse
                 {
-                    Message = "There is no user with that Email address",
+                    Message = Resource.NoUserWithThatEmail ,
                     IsSuccess = false,
                 };
             }
@@ -135,7 +136,7 @@ namespace EngineAPI.Services
             if (!result)
                 return new UserManagerResponse
                 {
-                    Message = "Invalid password",
+                    Message = Resource.InvalidPassword,
                     IsSuccess = false,
                 };
 
@@ -171,7 +172,7 @@ namespace EngineAPI.Services
                 return new UserManagerResponse
                 {
                     IsSuccess = false,
-                    Message = "User not found"
+                    Message = Resource.UserNotFound
                 };
 
             var decodedToken = WebEncoders.Base64UrlDecode(token);
@@ -182,14 +183,14 @@ namespace EngineAPI.Services
             if (result.Succeeded)
                 return new UserManagerResponse
                 {
-                    Message = "Email confirmed successfully!",
+                    Message = Resource.EmailConfirmed,
                     IsSuccess = true,
                 };
 
             return new UserManagerResponse
             {
                 IsSuccess = false,
-                Message = "Email did not confirm",
+                Message = Resource.EmailNotConfirmed,
                 Errors = result.Errors.Select(e => e.Description)
             };
         }
@@ -201,7 +202,7 @@ namespace EngineAPI.Services
                 return new UserManagerResponse
                 {
                     IsSuccess = false,
-                    Message = "No user associated with email",
+                    Message = Resource.NoUserWithThatEmail,
                 };
 
             var token = await _userManger.GeneratePasswordResetTokenAsync(user);
@@ -210,13 +211,13 @@ namespace EngineAPI.Services
 
             string url = $"{_configuration["AppUrl"]}/ResetPassword?email={email}&token={validToken}";
 
-            _emailService.SendMail(email, "Reset Password", "<h1>Follow the instructions to reset your password</h1>" +
-                $"<p>To reset your password <a href='{url}'>Click here</a></p>");
+            _emailService.SendMail(email, Resource.ResetPass, $"<h1>{Resource.FallowToReset}</h1>" +
+                $"<p> {Resource.ToResetMsg} <a href='{url}'>{Resource.ClickHere}</a></p>");
 
             return new UserManagerResponse
             {
                 IsSuccess = true,
-                Message = "Reset password URL has been sent to the email successfully!"
+                Message = Resource.ResetPassUrlWasSend
             };
         }
 
@@ -227,14 +228,14 @@ namespace EngineAPI.Services
                 return new UserManagerResponse
                 {
                     IsSuccess = false,
-                    Message = "No user associated with email",
+                    Message = Resource.NoUserWithThatEmail,
                 };
 
             if (model.NewPassword != model.ConfirmPassword)
                 return new UserManagerResponse
                 {
                     IsSuccess = false,
-                    Message = "Password doesn't match its confirmation",
+                    Message = Resource.ConfirmPassDosntMatch,
                 };
 
             var decodedToken = WebEncoders.Base64UrlDecode(model.Token);
@@ -245,13 +246,13 @@ namespace EngineAPI.Services
             if (result.Succeeded)
                 return new UserManagerResponse
                 {
-                    Message = "Password has been reset successfully!",
+                    Message = Resource.PasswordWasReset,
                     IsSuccess = true,
                 };
 
             return new UserManagerResponse
             {
-                Message = "Something went wrong",
+                Message = Resource.SomethingWrong,
                 IsSuccess = false,
                 Errors = result.Errors.Select(e => e.Description),
             };
@@ -304,20 +305,20 @@ namespace EngineAPI.Services
             if (!string.IsNullOrEmpty(origin))
             {
                 var verifyUrl = $"{origin}/account/verify-email?token={account.VerificationToken}";
-                message = $@"<p>Please click the below link to verify your email address:</p>
+                message = $@"<p>{Resource.BelowLink}</p>
                              <p><a href=""{verifyUrl}"">{verifyUrl}</a></p>";
             }
             else
             {
-                message = $@"<p>Please use the below token to verify your email address with the <code>/accounts/verify-email</code> api route:</p>
+                message = $@"<p>{Resource.BelowToken} <code>/accounts/verify-email</code> api route:</p>
                              <p><code>{account.VerificationToken}</code></p>";
             }
 
             _emailService.SendMail(
                 to: account.Email,
-                subject: "Sign-up Verification API - Verify Email",
-                body: $@"<h4>Verify Email</h4>
-                         <p>Thanks for registering!</p>
+                subject: Resource.SignUpVerification,
+                body: $@"<h4>{Resource.VerifyEmail}</h4>
+                         <p>{Resource.ThanksForRegister}</p>
                          {message}"
             );
         }

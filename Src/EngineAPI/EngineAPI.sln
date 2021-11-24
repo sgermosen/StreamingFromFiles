@@ -9,6 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "..\Domain\Domain.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Transversal", "..\Transversal\Transversal.csproj", "{3BCACA62-B913-47D9-A3A1-84BD038CB632}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{01DC495F-E3F8-428B-9181-783C9B9DECEC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infraestructure", "Infraestructure", "{60AAAAC9-1711-408A-9F01-93BAAA338EAA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{D61F628C-E8F0-49F2-8B33-C4E3A71B54E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +36,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{792EEBC4-B5FA-418A-AA32-DD1F63AEB056} = {01DC495F-E3F8-428B-9181-783C9B9DECEC}
+		{4CF94E05-DBA5-4D66-9F10-C5006628CF64} = {60AAAAC9-1711-408A-9F01-93BAAA338EAA}
+		{3BCACA62-B913-47D9-A3A1-84BD038CB632} = {D61F628C-E8F0-49F2-8B33-C4E3A71B54E5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {39F7FB96-FAAC-4319-81D3-481A91E90CD6}

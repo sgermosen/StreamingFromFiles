@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using EngineAPI.Resources;
+using System.ComponentModel.DataAnnotations;
 
 namespace EngineAPI.Validations
 {
@@ -11,7 +12,7 @@ namespace EngineAPI.Validations
 
             var firstLetter = value.ToString()[0].ToString();
             if (firstLetter != firstLetter.ToUpper())
-                return new ValidationResult("Fisrt Letter must be UpperCase");
+                return new ValidationResult(Resource.FirstLetterUppercaseError);
             return ValidationResult.Success;
 
             // return base.IsValid(value, validationContext);

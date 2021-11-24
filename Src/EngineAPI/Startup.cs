@@ -1,4 +1,5 @@
 using AutoMapper;
+using Azure.Storage.Blobs;
 using Domain;
 using Domain.Entities;
 using EngineAPI.Behaviors;
@@ -37,7 +38,6 @@ namespace EngineAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-
             services.AddAutoMapper(typeof(Startup));
 
             services.AddSingleton(provider =>
@@ -49,7 +49,7 @@ namespace EngineAPI
 
             services.AddSingleton<GeometryFactory>(NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326)); //Este es el valor usado para hacer mediciones en el planeta tierra, cuando se hagan sistemas para marte deben tener esto en cuenta
 
-            services.AddTransient<IStorageSaver, AzureStorageSaver>();
+            services.AddTransient<IStorageManager, AzureStorageSaver>();
             services.AddScoped<IMailHelper, MailHelper>();
             services.AddScoped<IAccountService, AccountService>();
 
@@ -73,8 +73,6 @@ namespace EngineAPI
             })
                 .AddEntityFrameworkStores<ApplicationDataContext>()
                 .AddDefaultTokenProviders();
-
-
 
             services.AddAuthentication(auth =>
             {
@@ -115,7 +113,12 @@ namespace EngineAPI
                     options.Filters.Add(typeof(BadRequestParser));//Para que cada badrequest sea interceptado y en lugar de devolver el badrequest simple, devuelva un listado de string de los errores que sea mas facil de manipular en el que va a consumir esa app
                 }
                 ).ConfigureApiBehaviorOptions(BehaviorBadRequests.Parse); //Esto es para que se sobreescriba el badrequest que viene desde los helpers internos del framework como ApiController
+          
             services.AddRazorPages();
+
+            services.AddScoped(_ => {
+                return new BlobServiceClient(Configuration.GetConnectionString("AzureStorage"));
+            });
 
             services.AddCors(options =>
             {
@@ -133,6 +136,7 @@ namespace EngineAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "EngineAPI", Version = "v1" });
             });
+
             services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_CONNECTIONSTRING"]);
 
         }

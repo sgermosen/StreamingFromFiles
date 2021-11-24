@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace EngineAPI.Utils
 {
-    public class LocalStorageSaver : IStorageSaver
+    public class LocalStorageManager: IStorageManager
     {
         private readonly IWebHostEnvironment env;
         private readonly IHttpContextAccessor httpContextAccessor;
 
-        public LocalStorageSaver(IWebHostEnvironment env, IHttpContextAccessor httpContextAccessor)
+        public LocalStorageManager(IWebHostEnvironment env, IHttpContextAccessor httpContextAccessor)
         {
             this.env = env;
             this.httpContextAccessor = httpContextAccessor;

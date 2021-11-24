@@ -123,4 +123,7 @@
   <data name="Home" xml:space="preserve">
     <value>Desde Casa</value>
   </data>
+  <data name="ModelNull" xml:space="preserve">
+    <value>El modelo es nulo</value>
+  </data>
 </root>

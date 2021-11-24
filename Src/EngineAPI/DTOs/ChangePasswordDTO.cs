@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using EngineAPI.Resources;
+using System.ComponentModel.DataAnnotations;
 
 namespace EngineAPI.DTOs
 {
     public class ChangePasswordDTO
     {
-        [Display(Name = "Contraseña actual")]
+        [Display(Name = nameof(Resource.ActualPass))]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [DataType(DataType.Password)]
         [MinLength(6, ErrorMessage = "El campo {0} debe tener una longitud mínima de {1} carácteres.")]

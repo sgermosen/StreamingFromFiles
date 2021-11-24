@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using EngineAPI.Resources;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace EngineAPI.Utils
             }
             catch (Exception)
             {
-                bindingContext.ModelState.TryAddModelError(propertyName, "The Value given is not of the correct Type");
+                bindingContext.ModelState.TryAddModelError(propertyName, Resource.ValueIsNotOfCorrectType );
             }
 
             return Task.CompletedTask;
