@@ -1,20 +1,21 @@
 ﻿using System;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
+using EngineAPI.Models;
 
 namespace EngineAPI.Utils
 {
     public interface IStorageManager
     {
-        Task<byte[]> GetFileAsync(string fileName, string containerName); 
+        Task<FileStorageResponse> GetFileAsync(string fileName, string containerName); 
         Task DeleteFile(string route, string container);
         Task<string> EditFile(string container, IFormFile file, string route);
         Task<string> SaveFile(string container, IFormFile file);
-        Task<Guid> UploadBlobAsync(IFormFile file, string containerName);
+        Task<FileStorageResponse> UploadBlobAsync(IFormFile file, string containerName);
 
-        Task<Guid> UploadBlobAsync(byte[] file, string containerName);
+        Task<FileStorageResponse> UploadBlobAsync(byte[] file, string containerName);
 
-        Task<Guid> UploadBlobAsync(string image, string containerName);
+        Task<FileStorageResponse> UploadBlobAsync(string image, string containerName);
 
         Task DeleteBlobAsync(Guid id, string containerName);
     }

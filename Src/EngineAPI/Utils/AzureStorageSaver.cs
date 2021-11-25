@@ -1,4 +1,5 @@
 ﻿using Azure.Storage.Blobs;
+using EngineAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 //using Microsoft.WindowsAzure.Storage.Blob;
@@ -10,49 +11,53 @@ using System.Threading.Tasks;
 
 namespace EngineAPI.Utils
 {
-    public class AzureStorageManager: IStorageManager
+    public class AzureStorageManager : IStorageManager
     {
         private readonly string _connectionString;
         //  private readonly CloudBlobClient _blobClient;
         private readonly BlobServiceClient _blobClient;
-         
+
         public AzureStorageManager(IConfiguration configuration, BlobServiceClient blobServiceClient)
         {
             _connectionString = configuration.GetConnectionString("AzureStorage");
-           // string keys = configuration["Blob:ConnectionString"];
+            // string keys = configuration["Blob:ConnectionString"];
             //CloudStorageAccount storageAccount = CloudStorageAccount.Parse(keys);
             //_blobClient = storageAccount.CreateCloudBlobClient();
             _blobClient = blobServiceClient;
 
         }
 
-        public async Task<byte[]> GetFileAsync(string fileName, string containerName)
+        public async Task<FileStorageResponse> GetFileAsync(string fileName, string containerName)
         {
             var blobContainer = _blobClient.GetBlobContainerClient(containerName);
 
             var blobClient = blobContainer.GetBlobClient(fileName);
             var downloadContent = await blobClient.DownloadAsync();
-            using (MemoryStream ms = new MemoryStream())
-            {
-                await downloadContent.Value.Content.CopyToAsync(ms);
-                return ms.ToArray();
-            }
+            var extension = Path.GetExtension(fileName);
+
+            using MemoryStream ms = new MemoryStream();
+            await downloadContent.Value.Content.CopyToAsync(ms);
+            return new FileStorageResponse { FileName = fileName, Extension = extension, File = ms.ToArray() };
         }
 
-        public async Task<Guid> UploadBlobAsync(byte[] file, string containerName)
+        public async Task<FileStorageResponse> UploadBlobAsync(byte[] file, string containerName)
         {
             MemoryStream stream = new MemoryStream(file);
             Guid name = Guid.NewGuid();
             //CloudBlobContainer container = _blobClient.GetContainerReference(containerName);
             //CloudBlockBlob blockBlob = container.GetBlockBlobReference($"{name}");
             //await blockBlob.UploadFromStreamAsync(stream);
-            var blobContainer = _blobClient.GetBlobContainerClient(containerName);// ("upload-file");
-            var blobClient = blobContainer.GetBlobClient($"{name}");//file.Name); 
+
+            var extension = Path.GetExtension(file.ToString());
+            var fileName = $"{name}{extension}";
+            var client = new BlobContainerClient(_connectionString, containerName);
+            await client.CreateIfNotExistsAsync();
+            var blobClient = client.GetBlobClient(fileName);
             await blobClient.UploadAsync(stream);
-            return name;
+            return new FileStorageResponse { Extension = extension, FileName = fileName, Name = name };
         }
 
-        public async Task<Guid> UploadBlobAsync(IFormFile file, string containerName)
+        public async Task<FileStorageResponse> UploadBlobAsync(IFormFile file, string containerName)
         {
             Stream stream = file.OpenReadStream();
             Guid name = Guid.NewGuid();
@@ -61,35 +66,43 @@ namespace EngineAPI.Utils
             //await blockBlob.UploadFromStreamAsync(stream);
             //return name;
 
-            var blobContainer = _blobClient.GetBlobContainerClient(containerName);// ("upload-file");
-            var blobClient = blobContainer.GetBlobClient($"{name}");//file.Name); 
+            var extension = Path.GetExtension(file.FileName);
+            var fileName = $"{name}{extension}";
+            var client = new BlobContainerClient(_connectionString, containerName);
+            await client.CreateIfNotExistsAsync();
+            var blobClient = client.GetBlobClient(fileName);
             await blobClient.UploadAsync(stream);
-            return name;
+            return new FileStorageResponse { Extension = extension, FileName = fileName, Name = name };
+
 
         }
 
-        public async Task<Guid> UploadBlobAsync(string image, string containerName)
+        public async Task<FileStorageResponse> UploadBlobAsync(string image, string containerName)
         {
             Stream stream = File.OpenRead(image);
             Guid name = Guid.NewGuid();
             //CloudBlobContainer container = _blobClient.GetContainerReference(containerName);
             //CloudBlockBlob blockBlob = container.GetBlockBlobReference($"{name}");
-           // await blockBlob.UploadFromStreamAsync(stream); 
-            var blobContainer = _blobClient.GetBlobContainerClient(containerName);// ("upload-file");
-            var blobClient = blobContainer.GetBlobClient($"{name}");//file.Name); 
+            // await blockBlob.UploadFromStreamAsync(stream); 
+            var extension = Path.GetExtension(image);
+            var fileName = $"{name}{extension}";
+            var client = new BlobContainerClient(_connectionString, containerName);
+            await client.CreateIfNotExistsAsync();
+            var blobClient = client.GetBlobClient(fileName);
             await blobClient.UploadAsync(stream);
-            return name;
+            return new FileStorageResponse { Extension = extension, FileName = fileName, Name = name };
+
         }
 
         public async Task DeleteBlobAsync(Guid id, string containerName)
         {
             //CloudBlobContainer container = _blobClient.GetContainerReference(containerName);
             //CloudBlockBlob blockBlob = container.GetBlockBlobReference($"{id}");
-           // await blockBlob.DeleteAsync();
+            // await blockBlob.DeleteAsync();
 
             var blobContainer = _blobClient.GetBlobContainerClient(containerName);// ("upload-file");
             var blobClient = blobContainer.GetBlobClient($"{id}");//file.Name); 
-              await blobClient.DeleteIfExistsAsync();
+            await blobClient.DeleteIfExistsAsync();
         }
 
         public async Task<string> SaveFile(string container, IFormFile file)

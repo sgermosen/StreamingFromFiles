@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using EngineAPI.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
@@ -40,17 +41,17 @@ namespace EngineAPI.Utils
             return routeForDb;
         }
 
-        public Task<Guid> UploadBlobAsync(IFormFile file, string containerName)
+        public Task<FileStorageResponse> UploadBlobAsync(IFormFile file, string containerName)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Guid> UploadBlobAsync(byte[] file, string containerName)
+        public Task<FileStorageResponse> UploadBlobAsync(byte[] file, string containerName)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Guid> UploadBlobAsync(string image, string containerName)
+        public Task<FileStorageResponse> UploadBlobAsync(string image, string containerName)
         {
             throw new NotImplementedException();
         }
@@ -81,6 +82,11 @@ namespace EngineAPI.Utils
         }
 
         public Task<byte[]> GetFileAsync(string fileName, string containerName)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<FileStorageResponse> IStorageManager.GetFileAsync(string fileName, string containerName)
         {
             throw new NotImplementedException();
         }

@@ -49,7 +49,7 @@ namespace EngineAPI
 
             services.AddSingleton<GeometryFactory>(NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326)); //Este es el valor usado para hacer mediciones en el planeta tierra, cuando se hagan sistemas para marte deben tener esto en cuenta
 
-            services.AddTransient<IStorageManager, AzureStorageSaver>();
+            services.AddTransient<IStorageManager, AzureStorageManager>();
             services.AddScoped<IMailHelper, MailHelper>();
             services.AddScoped<IAccountService, AccountService>();
 

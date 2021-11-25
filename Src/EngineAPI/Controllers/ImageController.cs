@@ -3,6 +3,7 @@ using Domain;
 using EngineAPI.Models;
 using EngineAPI.Utils;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace EngineAPI.Controllers
@@ -30,18 +31,24 @@ namespace EngineAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(string fileName)
         {
-            var imgBytes = await StorageManager.GetFileAsync(fileName, "images");
-            return File(imgBytes, "image/webp");
+            string encodingType = "";
+            var fileBytes = await StorageManager.GetFileAsync(fileName, "images");
+            if (fileBytes.Extension == ".mp4")
+                encodingType = "video/mp4";
+            else if (fileBytes.Extension == ".jpg" || fileBytes.Extension == ".png" || fileBytes.Extension == ".webp")
+                encodingType = "image/webp";
+
+            return File(fileBytes.File, encodingType);
         }
 
         [Route("download")]
         [HttpGet]
         public async Task<IActionResult> Download(string fileName)
         {
-            var imagBytes = await StorageManager.Get(fileName);
-            return new FileContentResult(imagBytes, "application/octet-stream")
+            var imagBytes = await StorageManager.GetFileAsync(fileName, "images");
+            return new FileContentResult(imagBytes.File, "application/octet-stream")
             {
-                FileDownloadName = Guid.NewGuid().ToString() + ".webp",
+                FileDownloadName = Guid.NewGuid().ToString() + imagBytes.Extension,
             };
         }
     }
