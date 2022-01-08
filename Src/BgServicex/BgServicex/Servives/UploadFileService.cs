@@ -1,11 +1,12 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using Azure.Storage.Blobs;
+﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using BgServicex.Models;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace BgServicex.Servives
 {
@@ -14,7 +15,6 @@ namespace BgServicex.Servives
         private readonly ILogger<UploadFileService> _logger;
         //private readonly CloudBlobClient _blobClient;
         private readonly string _container;
-
         private readonly string _connectionString;
         // private readonly BlobServiceClient _blobClient;
 
@@ -26,10 +26,8 @@ namespace BgServicex.Servives
             //  CloudStorageAccount storageAccount = CloudStorageAccount.Parse(keys);
             //  _blobClient = storageAccount.CreateCloudBlobClient();
             _container = configuration["Blob:ContainerName"];
-
             _connectionString = configuration["Blob:ConnectionString"];// configuration.GetConnectionString("Blob:ConnectionString");
-            //  _blobClient = blobServiceClient;
-
+            //  _blobClient = blobServiceClient; 
         }
 
         public async Task<FileUploadedViewModel> Upload(string filename, string fullpath)
@@ -39,20 +37,10 @@ namespace BgServicex.Servives
 
             var fileBytes = File.ReadAllBytes(fullpath);
 
-            //var containerObject = _blobClient.GetContainerReference(_container);
-
+            //var containerObject = _blobClient.GetContainerReference(_container); 
             //if (containerObject.CreateIfNotExistsAsync().Result)
             //    await containerObject.SetPermissionsAsync(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
-
-            //var ext = Path.GetExtension(fullpath).ToString();
-            //Guid newFileame = Guid.NewGuid();
-
             //var fileobject = containerObject.GetBlockBlobReference($"{newFileame}{ext}");
-
-            //var provider = new FileExtensionContentTypeProvider();
-            //if (!provider.TryGetContentType(filename, out string file_type))
-            //    file_type = "application/octet-stream";
-
             //fileobject.Properties.ContentType = file_type;
             //await fileobject.UploadFromByteArrayAsync(fileBytes, 0, fileBytes.Length);
 
@@ -65,7 +53,16 @@ namespace BgServicex.Servives
 
             await client.CreateIfNotExistsAsync();//PublicAccessType.Blob);
             var blobClient = client.GetBlobClient(fileName);
-            await blobClient.UploadAsync(stream);
+
+            var provider = new FileExtensionContentTypeProvider();
+            if (!provider.TryGetContentType(filename, out string file_type))
+                file_type = "application/octet-stream";
+
+            var httpHeaders = new BlobHttpHeaders
+            {
+                ContentType = file_type
+            };
+            await blobClient.UploadAsync(stream, httpHeaders);
 
             _logger.LogInformation($"In Service Upload Done: {client.Uri.AbsoluteUri}/{fileName}");
             return new FileUploadedViewModel
