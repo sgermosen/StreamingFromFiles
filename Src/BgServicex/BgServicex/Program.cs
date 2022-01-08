@@ -1,5 +1,8 @@
+using BgServicex.Utils;
 using Domain;
+using Microsoft.Azure.Management.Media.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -12,9 +15,9 @@ using System.IO;
 namespace BgServicex
 {
     public class Program
-    {
+    { 
         public static void Main(string[] args)
-        {
+        { 
             const string loggerTemplate = @"{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u4}]<{ThreadId}> [{SourceContext:l}] {Message:lj}{NewLine}{Exception}";
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
             var logfile = Path.Combine(baseDir, "App_Data", "logs", "log.txt");
@@ -34,9 +37,23 @@ namespace BgServicex
                 Log.Information($"Application Directory: {baseDir}");
                 CreateHostBuilder(args).Build().Run();
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                Log.Fatal(e, "Application terminated unexpectedly");
+                Log.Fatal(exception, "Application terminated unexpectedly");
+                if (exception.Source.Contains("ActiveDirectory"))
+                {
+                    Log.Fatal(exception, "ActiveDirectory: Make sure that you have filled out the appsettings.json");
+
+                    Console.Error.WriteLine("TIP: Make sure that you have filled out the appsettings.json file before running this sample.");
+                }
+
+                Console.Error.WriteLine($"{exception.Message}");
+
+                if (exception.GetBaseException() is ErrorResponseException apiException)
+                {
+                    Console.Error.WriteLine(
+                        $"ERROR: API call failed with error code '{apiException.Body.Error.Code}' and message '{apiException.Body.Error.Message}'.");
+                }
             }
             finally
             {
@@ -58,7 +75,7 @@ namespace BgServicex
                     services.Configure<AppSettings>(hostContext.Configuration.GetSection("AppSettings"));
                     //services.AddScoped<IServiceA, ServiceA>();
                     //services.AddScoped<IServiceB, ServiceB>();
-                    services.AddScoped<IUploadFileService, UploadFileService>();
+                   // services.AddScoped<IUploadFileService, UploadFileService>();
                     //  services.AddScoped<IBlobHelper, BlobHelper>();
                     // services.AddScoped<IUserHelper, UserHelper>();
                     services.AddDbContext<ApplicationDataContext>(options =>

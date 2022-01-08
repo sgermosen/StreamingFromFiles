@@ -123,4 +123,97 @@
   <data name="Home" xml:space="preserve">
     <value>From Home</value>
   </data>
+  <data name="ModelNull" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="ConfirmPassDosntMatch" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="ModelInvalid" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="LoginFail" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="NewLogin" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="NewLoginMessage" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="ConfirmEmail" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="WelcomeTo" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="ConfirmEmailMsg" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="ClickHere" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="UserCreated" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="UserNotCreated" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="NoUserWithThatEmail" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="InvalidPassword" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="EmailConfirmed" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="EmailNotConfirmed" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="BelowLink" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="BelowToken" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="ResetPass" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="FallowToReset" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="ToResetMsg" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="ResetPassUrlWasSend" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="PasswordWasReset" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="SomethingWrong" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="ThanksForRegister" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="VerifyEmail" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="SignUpVerification" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="ActualPass" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="ValueIsNotOfCorrectType" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
+  <data name="FirstLetterUppercaseError" xml:space="preserve">
+    <value>PLEASE SELECT TWO DISTINCT LANGUAGES</value>
+  </data>
 </root>

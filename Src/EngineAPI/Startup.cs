@@ -24,6 +24,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using System.Web.Http;
+
 namespace EngineAPI
 {
     public class Startup
@@ -192,9 +194,12 @@ namespace EngineAPI
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
-                //   endpoints.MapControllerRoute("default", "{culture:culture}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(name: "DefaultApi", "api/{controller}/{id}", defaults: new
+                {
+                    id = RouteParameter.Optional
+                    //   endpoints.MapControllerRoute("default", "{culture:culture}/{controller=Home}/{action=Index}/{id?}");
+                });
             });
-
 
         }
     }

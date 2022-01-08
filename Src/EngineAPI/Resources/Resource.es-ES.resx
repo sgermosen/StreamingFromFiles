@@ -126,4 +126,61 @@
   <data name="ModelNull" xml:space="preserve">
     <value>El modelo es nulo</value>
   </data>
+  <data name="ConfirmPassDosntMatch" xml:space="preserve">
+    <value>La confirmación de tu contraseña no coincide con la contraseña.</value>
+  </data>
+  <data name="ModelInvalid" xml:space="preserve">
+    <value>Error de modelo: ¡Algunas propiedades no son válidas!</value>
+  </data>
+  <data name="LoginFail" xml:space="preserve">
+    <value>Iniciar sesión</value>
+  </data>
+  <data name="NewLogin" xml:space="preserve">
+    <value>Nuevo inicio de sesión</value>
+  </data>
+  <data name="NewLoginMessage" xml:space="preserve">
+    <value>¡Oye !, se notó un nuevo inicio de sesión en tu cuenta&lt;/h1&gt;&lt;p&gt; Nuevo inicio de sesión en su cuenta en!</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>No encontrado</value>
+  </data>
+  <data name="ConfirmEmail" xml:space="preserve">
+    <value>¡Confirma tu email!</value>
+  </data>
+  <data name="WelcomeTo" xml:space="preserve">
+    <value>Bienvenido a</value>
+  </data>
+  <data name="ConfirmEmailMsg" xml:space="preserve">
+    <value>¡Por favor, confirme su dirección de correo electrónico!</value>
+  </data>
+  <data name="ClickHere" xml:space="preserve">
+    <value>Haciendo clic aquí!</value>
+  </data>
+  <data name="UserCreated" xml:space="preserve">
+    <value>Usuario creado correctamente</value>
+  </data>
+  <data name="UserNotCreated" xml:space="preserve">
+    <value>El usuario no se ha creado</value>
+  </data>
+  <data name="NoUserWithThatEmail" xml:space="preserve">
+    <value>No hay ningún usuario con esa dirección de correo electrónico</value>
+  </data>
+  <data name="InvalidPassword" xml:space="preserve">
+    <value>Contraseña no válida</value>
+  </data>
+  <data name="EmailConfirmed" xml:space="preserve">
+    <value>El correo electrónico {0} se confirmó con éxito.</value>
+  </data>
+  <data name="EmailNotConfirmed" xml:space="preserve">
+    <value>Correo electrónico no confirmado</value>
+  </data>
+  <data name="BelowLink" xml:space="preserve">
+    <value>Por favor, haga clic en el botón de abajo para verificar su dirección de correo electrónico.</value>
+  </data>
+  <data name="BelowToken" xml:space="preserve">
+    <value>Utilice el token a continuación para verificar su dirección de correo electrónico con el!</value>
+  </data>
+  <data name="ResetPass" xml:space="preserve">
+    <value>Restablecer Contraseña</value>
+  </data>
 </root>
