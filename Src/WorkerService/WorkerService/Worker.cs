@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Options;
+
 namespace WorkerService
 {
     public class Worker : BackgroundService
@@ -7,10 +9,10 @@ namespace WorkerService
         private readonly string _inputFolder;
         private readonly IServiceProvider _services;
 
-        public Worker(ILogger<Worker> logger, IServiceProvider services)
+        public Worker(ILogger<Worker> logger, IOptions<AppSettings> settings, IServiceProvider services)
         {
             _logger = logger;
-            _inputFolder = @"C:\temp";
+            _inputFolder = settings.Value.InputFolder;
             _services = services;
         }
 
@@ -49,8 +51,8 @@ namespace WorkerService
                 // do some work
                 using (var scope = _services.CreateScope())
                 {
-                    var serviceA = scope.ServiceProvider.GetRequiredService<IServiceA>();
-                    serviceA.Run();
+                    var readContent = scope.ServiceProvider.GetRequiredService<IReadContentService>();
+                    readContent.Run(e.FullPath, e.Name);
                 }
                 _logger.LogInformation("Done with Inbound Change Event");
             }

@@ -10,13 +10,14 @@ IHost host = Host.CreateDefaultBuilder(args)
    {
        // configure the app here.
    })
-   .ConfigureServices(services =>
-   {
-       services.AddHostedService<Worker>();
-       //  services.Configure<AppSettings>(services.Configuration.GetSection("AppSettings"));
-       services.AddScoped<IServiceA, ServiceA>();
-       services.AddScoped<IServiceB, ServiceB>();
-   })
+    .ConfigureServices((hostContext, services) =>
+    {
+        services.AddHostedService<Worker>();
+        services.Configure<AppSettings>(hostContext.Configuration.GetSection("AppSettings"));
+        services.AddScoped<IReadContentService, ReadContentService>();
+        services.AddScoped<IApiConsumerService, ApiConsumerService>();
+        services.AddScoped<IFileConstructionService, FileConstructionService>();
+    })
    .Build();
 
 const string loggerTemplate = @"{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u4}]<{ThreadId}> [{SourceContext:l}] {Message:lj}{NewLine}{Exception}";
